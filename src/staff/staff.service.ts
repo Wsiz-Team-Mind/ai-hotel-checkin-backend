@@ -1,10 +1,11 @@
-import { Injectable, ConflictException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, ConflictException, UnauthorizedException, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { Staff } from './entities/staff.entity';
 import { CreateStaffDto } from './dto/create-staff.dto';
 import { LoginStaffDto } from './dto/login-staff.dto';
+import { UpdateStaffDto } from './dto/update-staff.dto';
 
 @Injectable()
 export class StaffService {
@@ -58,5 +59,28 @@ export class StaffService {
 
   findOneById(id: number): Promise<Staff | null> {
     return this.staffRepository.findOneBy({ id });
+  }
+
+  async update(id: number, dto: UpdateStaffDto): Promise<Staff> {
+    const staff = await this.staffRepository.findOneBy({ id });
+    if (!staff) {
+      throw new NotFoundException('Staff not found');
+    }
+
+    if (dto.password) {
+      dto.password = await bcrypt.hash(dto.password, 10);
+    }
+
+    Object.assign(staff, dto);
+    return this.staffRepository.save(staff);
+  }
+
+  async remove(id: number): Promise<void> {
+    const staff = await this.staffRepository.findOneBy({ id });
+    if (!staff) {
+      throw new NotFoundException('Staff not found');
+    }
+
+    await this.staffRepository.remove(staff);
   }
 }
