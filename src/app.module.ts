@@ -6,6 +6,7 @@ import { StaffModule } from './staff/staff.module';
 import { BookingModule } from './booking/booking.module';
 import { Staff } from './staff/entities/staff.entity';
 import { Booking } from './booking/entities/booking.entity';
+import { CheckIn } from './checkin/entities/checkin.entity';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { Booking } from './booking/entities/booking.entity';
         username: config.get('DB_USERNAME'),
         password: config.get('DB_PASSWORD'),
         database: config.get('DB_NAME'),
-        entities: [Staff, Booking],
+        entities: [Staff, Booking, CheckIn],
         synchronize: true,
       }),
     }),
