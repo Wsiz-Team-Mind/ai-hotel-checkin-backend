@@ -6,6 +6,7 @@ import { StaffModule } from './staff/staff.module';
 import { BookingModule } from './booking/booking.module';
 import { Staff } from './staff/entities/staff.entity';
 import { Booking } from './booking/entities/booking.entity';
+import { CheckInModule } from './checkin/checkin.module';
 import { CheckIn } from './checkin/entities/checkin.entity';
 
 @Module({
@@ -26,6 +27,7 @@ import { CheckIn } from './checkin/entities/checkin.entity';
     }),
     StaffModule,
     BookingModule,
+    CheckInModule,
   ],
   controllers: [AppController],
 })
