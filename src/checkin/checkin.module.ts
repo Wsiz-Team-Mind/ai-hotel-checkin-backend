@@ -10,6 +10,6 @@ import { CheckInGateway } from '../core/gateways/checkin.gateway';
   imports: [TypeOrmModule.forFeature([CheckIn, Booking])],
   controllers: [CheckInController],
   providers: [CheckInService, CheckInGateway],
-  exports: [CheckInService],
+  exports: [CheckInService, CheckInGateway],
 })
 export class CheckInModule {}

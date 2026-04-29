@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Patch } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { BookingService } from './booking.service';
 import { CreateBookingDto } from './dto/create-booking.dto';
@@ -27,5 +27,18 @@ export class BookingController {
   @Get(':id')
   findOne(@Param('id') id: number) {
     return this.bookingService.findOne(id);
+  }
+
+  @Get('bookingid/:bookingId')
+  findByBookingId(@Param('bookingId') bookingId: string) {
+    return this.bookingService.findOneByBookingId(bookingId);
+  }
+
+  @Patch(':bookingId')
+  updateStatus(
+    @Param('bookingId') bookingId: string,
+    @Body() updateData: any
+  ) {
+    return this.bookingService.updateStatus(bookingId, updateData);
   }
 }
